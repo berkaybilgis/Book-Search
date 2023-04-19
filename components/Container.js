@@ -1,9 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import { useSearch } from "@/context/SearchContext";
+import { useRouter } from "next/router";
 
 function Container() {
-  const { bookData, setBookData } = useSearch();
+  const { bookData } = useSearch();
+  const router = useRouter();
 
   return (
     <div>
@@ -25,7 +27,15 @@ function Container() {
             <a href={book.volumeInfo.previewLink} target="_blank">
               Preview
             </a>
-            <button className="btn-text">Details</button>
+            <button
+              className="btn-text"
+              onClick={() => {
+                localStorage.setItem("selectedBook", JSON.stringify(book));
+                router.push(`/details/${book.volumeInfo.title}`);
+              }}
+            >
+              Details
+            </button>
           </div>
         ))}
     </div>
