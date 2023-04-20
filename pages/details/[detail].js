@@ -1,7 +1,7 @@
 import { Image } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-function details() {
+function Details() {
   const [book, setBook] = useState(null); // localStorage'dan alınan kitap verisini tutan state
 
   useEffect(() => {
@@ -41,4 +41,4 @@ function details() {
   );
 }
 
-export default details;
+export default Details;
