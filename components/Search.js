@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSearch } from "@/context/SearchContext";
+import { BiSearch } from "react-icons/bi";
 
 function Search() {
   const [search, setSearch] = useState("");
@@ -17,12 +18,15 @@ function Search() {
     <div>
       <form onSubmit={(e) => handleSubmit(e)}>
         <input
+          className="search-input"
           onChange={(e) => setSearch(e.target.value)}
           type="text"
           placeholder="Book Title ..."
           value={search}
         />
-        <button type="submit">send</button>
+        <button className="submit-btn" type="submit">
+          <BiSearch />
+        </button>
       </form>
     </div>
   );
