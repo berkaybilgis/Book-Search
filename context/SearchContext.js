@@ -1,10 +1,10 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import axios from "axios"; // apiden veri çekmek için axios import edildi
 
 const SearchContext = createContext();
 
 export const SearchProvider = ({ children }) => {
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState(""); // submit işlemi tamamnladığında alınan değeri tutan state
   // bu state apiden aldığımız datayı localStorage'dan alıyor
   const [bookData, setBookData] = useState(() => {
     // localStorage tanımlanma durumu kontrol ediliyor
@@ -17,9 +17,10 @@ export const SearchProvider = ({ children }) => {
     }
   });
 
-  const url = `https://www.googleapis.com/books/v1/volumes?`;
-  const key = process.env.NEXT_PUBLIC_API_KEY;
+  const url = `https://www.googleapis.com/books/v1/volumes?`; // api adresi
+  const key = process.env.NEXT_PUBLIC_API_KEY; // api kullanımı için gereken şifre
 
+  // apiden filter state durumuna bağlı olarak veriyi çeker ve localStorage'a kaydeder
   useEffect(() => {
     filter === ""
       ? null
@@ -31,8 +32,6 @@ export const SearchProvider = ({ children }) => {
           .catch((err) => console.log(err));
   }, [filter]);
 
-  console.log(bookData);
-
   // sayfa kullanıcı tarafından yenilendiğinde localStorage'daki bookData verisini siler
   useEffect(() => {
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -41,15 +40,16 @@ export const SearchProvider = ({ children }) => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
+
   // sayfa yenilendiğinde silme işlemi yapan fonksiyon
   const handleBeforeUnload = () => {
     localStorage.removeItem("bookData");
   };
 
-  const values = { filter, setFilter, bookData, setBookData };
+  const values = { filter, setFilter, bookData, setBookData }; // context value propları
   return (
     <SearchContext.Provider value={values}>{children}</SearchContext.Provider>
   );
 };
 
-export const useSearch = () => useContext(SearchContext);
+export const useSearch = () => useContext(SearchContext); // useContext işlemi sade bir tanıma aktarıldı

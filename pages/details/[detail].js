@@ -2,20 +2,21 @@ import { Image } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 function details() {
-  const [book, setBook] = useState(null);
-  useEffect(() => {
-    const storedData = localStorage.getItem("selectedBook");
-    const storedBook = storedData ? JSON.parse(storedData) : [];
-    setBook(storedBook);
-  }, []);
+  const [book, setBook] = useState(null); // localStorage'dan alınan kitap verisini tutan state
 
-  console.log(book);
+  useEffect(() => {
+    const storedData = localStorage.getItem("selectedBook"); // localStorage'dan selectedBook verisini alır
+    const storedBook = storedData ? JSON.parse(storedData) : []; // alınan veri parse edilir
+    setBook(storedBook); // alınan veri setBook ile state'e alınır
+  }, []);
 
   return (
     <div className="details">
-      <h1>{book ? book.volumeInfo.title : ""}</h1>
+      {/* başlık oluşturuldu */}
+      <h1>{book?.volumeInfo?.title}</h1>
 
-      {book && book.volumeInfo.imageLinks ? (
+      {/* image alındı */}
+      {book?.volumeInfo?.imageLinks && (
         <Image
           className="image"
           src={book.volumeInfo.imageLinks.thumbnail}
@@ -24,25 +25,18 @@ function details() {
           h="250px"
           objectFit="cover"
         />
-      ) : (
-        ""
       )}
 
-      {book && book.volumeInfo.authors && (
-        <h3>Author: {book.volumeInfo.authors}</h3>
-      )}
+      {/* yazar verisi alındı */}
+      {book?.volumeInfo?.authors && <h3>Author: {book.volumeInfo.authors}</h3>}
 
-      {book && book.volumeInfo.publishedDate ? (
+      {/* yayımlanan tarih alındı */}
+      {book?.volumeInfo?.publishedDate && (
         <div>Published Date: {book.volumeInfo.publishedDate}</div>
-      ) : (
-        ""
       )}
 
-      {book && book.volumeInfo.description ? (
-        <p>{book.volumeInfo.description}</p>
-      ) : (
-        ""
-      )}
+      {/* detay bölümü oluşturuldu */}
+      {book?.volumeInfo?.description && <p>{book.volumeInfo.description}</p>}
     </div>
   );
 }
