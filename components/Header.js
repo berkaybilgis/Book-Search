@@ -2,9 +2,12 @@ import React from "react";
 
 function Header() {
   return (
-    <header>
-      <h1>Book Search</h1>
-    </header>
+    <>
+      <div className="banner"></div>
+      <header className="header">
+        <h1>Book Search</h1>
+      </header>
+    </>
   );
 }
 
